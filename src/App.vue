@@ -19,15 +19,14 @@ export default {
 
 body {
   margin: 0;
+  background-color: black;
+  text-align: center;
+  color: white;
 }
 
 #app {
-  
-}
-
-div {
-  display: flex;
-  flex-direction: column;
+  height: 100%;
+  width: auto;
 }
 
 </style>

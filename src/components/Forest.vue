@@ -1,17 +1,9 @@
 <template lang="html">
-  <div id="background">
-    <img id="back"
-      src="../assets/forest/backTrees.png"
-    />
-    <img id="lights"
-      src="../assets/forest/lights.png"
-    />
-    <img id="middle"
-      src="../assets/forest/middleTrees.png"
-    />
-    <img id="front"
-      src="../assets/forest/frontTrees.png"
-    />
+  <div id="forest">
+    <div id="background" class="parallax"></div>
+    <div id="lights" class="parallax"></div>
+    <div id="midground" class="parallax"></div>
+    <div id="front" class="parallax"></div>
   </div>
 </template>
 
@@ -23,10 +15,38 @@ export default {
 
 <style lang="css" scoped>
 
-  img {
-    position: absolute;
-    height: 100%;
-    width: 100%;
-  }
+#background {
+  background-image: url('../assets/forest/background.png');
+  z-index: 0;
+}
+
+#lights {
+  background-image: url('../assets/forest/lights.png');
+  z-index: 1;
+}
+
+#midground {
+  background-image: url('../assets/forest/midground.png');
+  z-index: 2;
+}
+
+#front {
+  background-image: url('../assets/forest/foreground.png');
+  z-index: 3;
+}
+
+.parallax {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  background-attachment: local, scroll;
+  background-position: center;
+  background-repeat: repeat-x;
+  background-size: 100%;
+}
 
 </style>
