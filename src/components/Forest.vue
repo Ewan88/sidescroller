@@ -1,5 +1,5 @@
 <template lang="html">
-  <div id="forest">
+  <div ref="wrapper">
     <div id="background" class="parallax"></div>
     <div id="lights" class="parallax"></div>
     <div id="midground" class="parallax"></div>
@@ -37,16 +37,12 @@ export default {
 
 .parallax {
   position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
   height: 100%;
   width: 100%;
-  background-attachment: local, scroll;
+  background-attachment: local;
   background-position: center;
   background-repeat: repeat-x;
-  background-size: 100%;
+  background-size: auto 50%;
 }
 
 </style>
