@@ -1,21 +1,56 @@
 <template lang="html">
-  <div ref="wrapper">
-    <div id="background" class="parallax"></div>
-    <div id="lights" class="parallax"></div>
-    <div id="midground" class="parallax"></div>
-    <div id="front" class="parallax"></div>
+  <div id="forest">
+    <div id="back"
+      :class="{'parallax': true,
+                'moveLeft': movingLeft,
+                'moveRight': movingRight
+              }"
+    />
+    <div id="lights"
+      :class="{'parallax': true,
+                'moveLeft': movingLeft,
+                'moveRight': movingRight
+              }"
+    />
+    <div id="mid"
+      :class="{'parallax': true,
+                'moveLeft': movingLeft,
+                'moveRight': movingRight
+              }"
+    />
+    <div id="front"
+      :class="{'parallax': true,
+                'moveLeft': movingLeft,
+                'moveRight': movingRight
+              }"
+    />
   </div>
 </template>
 
 <script>
 export default {
   name: 'forest',
+  data() {
+    return {
+      movingLeft: false,
+      movingRight: false
+    }
+  },
+  mounted() {
+
+  },
 }
 </script>
 
 <style lang="css" scoped>
 
-#background {
+#forest {
+  margin-top: 100px;
+  height: 400px;
+  width: auto;
+}
+
+#back {
   background-image: url('../assets/forest/background.png');
   z-index: 0;
   transition-duration: 1s;
@@ -27,7 +62,7 @@ export default {
   transition-duration: 0.8s;
 }
 
-#midground {
+#mid {
   background-image: url('../assets/forest/midground.png');
   z-index: 2;
   transition-duration: 0.6s;
@@ -41,12 +76,12 @@ export default {
 
 .parallax {
   position: fixed;
-  height: 100%;
+  height: 400px;
   width: 100%;
   background-attachment: local;
   background-position: center;
   background-repeat: repeat-x;
-  background-size: auto 70%;
+  background-size: auto 100%;
 }
 
 .moveLeft {
@@ -56,7 +91,5 @@ export default {
 .moveRight {
   background-position-x: -2%;
 }
-
-
 
 </style>
