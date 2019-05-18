@@ -11,7 +11,6 @@
 
 <script>
 import Forest from './components/Forest.vue'
-
 import { eventBus } from './main.js';
 
 export default {
@@ -25,6 +24,20 @@ export default {
         target.addEventListener(event, listener);
       }
     },
+
+    mouseMove(event) {
+      let windowX = window.innerWidth;
+      // let windowY = window.innerHeight;
+      let x = event.pageX;
+      // let y = event.pageY;
+      let newX = x - (windowX / 2);
+      // let newY = y - (windowY / 2);
+      if (newX < 0) {
+        eventBus.$emit('mouse-left');
+      } else if (newX > 0) {
+        eventBus.$emit('mouse-right');
+      }
+    }
   },
   mounted() {
     let wrapper = this.$refs.wrapper;
@@ -35,16 +48,16 @@ export default {
 
 <style>
 
-body {
-  margin: 0;
-  background-color: black;
-  text-align: center;
-  color: white;
-}
+  body {
+    margin: 0;
+    background-color: black;
+    text-align: center;
+    color: white;
+  }
 
-#app {
-  height: 100%;
-  width: auto;
-}
+  #app {
+    height: 100%;
+    width: auto;
+  }
 
 </style>

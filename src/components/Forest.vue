@@ -2,42 +2,48 @@
   <div id="forest">
     <div id="back"
       :class="{'parallax': true,
-                'moveLeft': movingLeft,
-                'moveRight': movingRight
+                'moveLeft': mouse=='left',
+                'moveRight': mouse=='right'
               }"
     />
     <div id="lights"
       :class="{'parallax': true,
-                'moveLeft': movingLeft,
-                'moveRight': movingRight
+                'moveLeft': mouse=='left',
+                'moveRight': mouse=='right'
               }"
     />
     <div id="mid"
       :class="{'parallax': true,
-                'moveLeft': movingLeft,
-                'moveRight': movingRight
+                'moveLeft': mouse=='left',
+                'moveRight': mouse=='right'
               }"
     />
     <div id="front"
       :class="{'parallax': true,
-                'moveLeft': movingLeft,
-                'moveRight': movingRight
+                'moveLeft': mouse=='left',
+                'moveRight': mouse=='right'
               }"
     />
   </div>
 </template>
 
 <script>
+import { eventBus } from '../main.js';
+
 export default {
   name: 'forest',
   data() {
     return {
-      movingLeft: false,
-      movingRight: false
+      mouse: '',
     }
   },
   mounted() {
-
+    eventBus.$on('mouse-left', () => {
+      this.mouse = 'left';
+    }),
+    eventBus.$on('mouse-right', () => {
+      this.mouse = 'right';
+    })
   },
 }
 </script>
@@ -85,11 +91,11 @@ export default {
 }
 
 .moveLeft {
-  background-position-x: 2%;
+  background-position-x: 30%;
 }
 
 .moveRight {
-  background-position-x: -2%;
+  background-position-x: -30%;
 }
 
 </style>
