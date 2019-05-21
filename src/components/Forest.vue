@@ -1,50 +1,76 @@
 <template lang="html">
-  <div id="forest">
-    <div id="back"
-      :class="{'parallax': true,
-                'moveLeft': mouse=='left',
-                'moveRight': mouse=='right'
-              }"
+  <div id="forest" ref="wrapper">
+    <div id="back" class="parallax"
+      v-bind:style="{
+        backgroundPositionX: computedX,
+        backgroundPositionY: computedY
+      }"
     />
-    <div id="lights"
-      :class="{'parallax': true,
-                'moveLeft': mouse=='left',
-                'moveRight': mouse=='right'
-              }"
+    <div id="lights" class="parallax"
+      v-bind:style="{
+        backgroundPositionX: computedX,
+        backgroundPositionY: computedY
+      }"
     />
-    <div id="mid"
-      :class="{'parallax': true,
-                'moveLeft': mouse=='left',
-                'moveRight': mouse=='right'
-              }"
+    <div id="mid" class="parallax"
+      v-bind:style="{
+        backgroundPositionX: computedX,
+        backgroundPositionY: computedY
+      }"
     />
-    <div id="front"
-      :class="{'parallax': true,
-                'moveLeft': mouse=='left',
-                'moveRight': mouse=='right'
-              }"
+    <div id="front" class="parallax"
+      v-bind:style="{
+        backgroundPositionX: computedX,
+        backgroundPositionY: computedY
+      }"
     />
   </div>
 </template>
 
 <script>
-import { eventBus } from '../main.js';
+// import { eventBus } from '../main.js';
 
 export default {
   name: 'forest',
   data() {
     return {
-      mouse: '',
+      mouseX: null,
+      mouseY: null,
+    }
+  },
+  computed: {
+    computedX: function () {
+      return this.mouseX;
+    },
+    computedY: function () {
+      return this.mouseY;
+    }
+  },
+  methods: {
+    addEvent(target, event, listener) {
+      if (target.addEventListener) {
+        target.addEventListener(event, listener);
+      }
+    },
+
+    mouseMove(event) {
+      let windowX = window.innerWidth;
+      let windowY = window.innerHeight;
+      let x = event.pageX;
+      let y = event.pageY;
+      let newX = windowX - x;
+      let newY = windowY - y;
+      console.log('window: ' + windowX + ', ' + windowY + ' mouse: ' + x + ', ' + y + ' new: ' + newX + ', ' + newY);
+
+      this.mouseX = newX + 'px';
+      this.mouseY = newY + 'px';
     }
   },
   mounted() {
-    eventBus.$on('mouse-left', () => {
-      this.mouse = 'left';
-    }),
-    eventBus.$on('mouse-right', () => {
-      this.mouse = 'right';
-    })
-  },
+    let wrapper = this.$refs.wrapper;
+    console.log(this);
+    this.addEvent(wrapper, "mousemove", this.mouseMove);
+  }
 }
 </script>
 
@@ -86,8 +112,8 @@ export default {
   width: 100%;
   background-attachment: local;
   background-position: center;
-  background-repeat: repeat-x;
-  background-size: auto 100%;
+  background-repeat: repeat;
+  background-size: auto 110%;
 }
 
 .moveLeft {
