@@ -1,17 +1,17 @@
 <template>
   <div id="app">
-    <Forest/>
+    <Game/>
   </div>
 </template>
 
 <script>
-import Forest from './components/Forest.vue'
+import Game from './components/Game.vue'
 // import { eventBus } from './main.js';
 
 export default {
   name: 'app',
   components: {
-    Forest
+    Game
   },
 }
 </script>
