@@ -1,4 +1,4 @@
-<template lang="html">
+<!-- <template lang="html">
   <div id="wrapper" ref="wrapper">
     <div id="back" class="parallax" v-bind:style="{
       backgroundPositionX: computedX,
@@ -39,6 +39,7 @@ export default {
   },
   methods: {
     addEvent(target, event, listener) {
+      console.log(target);
       if (target.addEventListener) {
         target.addEventListener(event, listener);
       }
@@ -46,14 +47,14 @@ export default {
 
     mouseMove(event) {
       let windowX = window.innerWidth;
-      let windowY = window.innerHeight;
+      // let windowY = window.innerHeight;
       let x = event.pageX;
-      let y = event.pageY;
+      // let y = event.pageY;
       // let newX = x - (windowX / 2);
       // let newY = y - (windowY / 2);
 
       this.backgroundX = (windowX - x);
-      this.backgroundY = (windowY - y);
+      // this.backgroundY = (windowY - y);
 
       /*
       if mouse is in center:
@@ -75,11 +76,23 @@ export default {
       //   this.backgroundY += (windowY - y) / 2;
       //   return;
       // }
+    },
+
+    escKey(event) {
+      console.log(event);
+      this.backGroundScroll();
+    },
+
+    backGroundScroll() {
+      this.backgroundY += 1000;
     }
   },
   mounted() {
     let wrapper = this.$refs.wrapper;
     this.addEvent(wrapper, "mousemove", this.mouseMove);
+    console.log('adding esc listener..');
+    console.log(this);
+    this.addEvent(this.window, "keydown", this.escKey);
   }
 }
 </script>
@@ -94,19 +107,22 @@ export default {
 #back {
   background-image: url('../assets/background/stars_back.png');
   z-index: 0;
-  transition-duration: 0.5s;
+  transition: background-position-x 0.5s linear;
+  transition-duration: 1s;
 }
 
 #mid {
   background-image: url('../assets/background/stars_mid.png');
   z-index: 2;
-  transition-duration: 1s;
+  transition: background-position-x 1s linear;
+  transition-duration: 2s;
 }
 
 #front {
   background-image: url('../assets/background/stars_front.png');
   z-index: 3;
-  transition-duration: 2s;
+  transition: background-position-x 2s linear;
+  transition-duration: 4s;
 }
 
 .parallax {
@@ -119,4 +135,4 @@ export default {
   background-size: auto;
 }
 
-</style>
+</style> -->
