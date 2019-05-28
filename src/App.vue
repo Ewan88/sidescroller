@@ -10,11 +10,11 @@
       backgroundPositionY: computedY
       }">
     </div>
-    <!-- <div id="front" class="parallax" v-bind:style="{
+    <div id="front" class="parallax" v-bind:style="{
       backgroundPositionX: computedX,
       backgroundPositionY: computedY
       }">
-    </div> -->
+    </div>
   </div>
 </template>
 
@@ -104,19 +104,19 @@ body {
 #back {
   background-image: url('./assets/background/stars_back.png');
   z-index: 0;
-  transition-duration: 2s;
+  transition-duration: 1.2s;
 }
 
 #mid {
   background-image: url('./assets/background/stars_mid.png');
-  z-index: 2;
-  transition-duration: 3s;
+  z-index: 1;
+  transition-duration: 1s;
 }
 
 #front {
   background-image: url('./assets/background/stars_front.png');
-  z-index: 3;
-  transition-duration: 5s;
+  z-index: 2;
+  transition-duration: 0.8s;
 }
 
 .parallax {
