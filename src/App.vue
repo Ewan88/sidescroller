@@ -1,40 +1,44 @@
 <template>
   <div id="app" ref="wrapper">
     <div id="back" class="parallax" v-bind:style="{
-      backgroundPositionX: computedX,
-      backgroundPositionY: computedY
+      backgroundPosition: computedPos,
       }">
     </div>
     <div id="mid" class="parallax" v-bind:style="{
-      backgroundPositionX: computedX,
-      backgroundPositionY: computedY
+      backgroundPosition: computedPos,
       }">
     </div>
     <div id="front" class="parallax" v-bind:style="{
-      backgroundPositionX: computedX,
-      backgroundPositionY: computedY
+      backgroundPosition: computedPos,
       }">
     </div>
+    <div id="dust" class="parallax" v-bind:style="{
+      backgroundPosition: computedPos,
+      }">
+    </div>
+    <Player/>
   </div>
 </template>
 
 <script>
+import { eventBus } from './main.js';
+import Player from './components/Player.vue';
 
 export default {
   name: 'app',
+  components: {
+    "Player": Player
+  },
   data() {
     return {
-      backgroundX: null,
-      backgroundY: null,
+      backgroundX: 0,
+      backgroundY: 0,
     }
   },
   computed: {
-    computedX: function () {
-      return this.backgroundX + 'px';
+    computedPos: function () {
+      return `${this.backgroundX}px ${this.backgroundY}px`;
     },
-    computedY: function () {
-      return this.backgroundY + 'px';
-    }
   },
   methods: {
     addEvent(target, event, listener) {
@@ -43,42 +47,24 @@ export default {
       }
     },
 
-    mouseMove(event) {
+    mouseListener(event) {
       let windowX = window.innerWidth;
       let windowY = window.innerHeight;
-      let x = event.pageX;
-      let y = event.pageY;
+      let x = event.offsetX;
+      let y = event.offsetY;
+
       // let newX = x - (windowX / 2);
       // let newY = y - (windowY / 2);
 
-      this.backgroundX = (windowX - x);
-      this.backgroundY = (windowY - y);
+      this.backgroundX += -(x - (windowX / 2));
+      this.backgroundY += -(y - (windowY / 2));
 
-      /*
-      if mouse is in center:
-        set bg position to mouse position
-      otherwise:
-        add mouse position to bg position
-      */
-
-      // if (this.backgroundX == null || this.backgroundY == null) {
-      //   this.backgroundX = (windowX - x);
-      //   this.backgroundY = (windowY - y);
-      //   return;
-      // } else if ((newX > -10 && newX < 10) || (newY > -10 && newY < 10)) {
-      //   this.backgroundX = (windowX - x);
-      //   this.backgroundY = (windowY - y);
-      //   return;
-      // } else {
-      //   this.backgroundX += (windowX - x) / 2;
-      //   this.backgroundY += (windowY - y) / 2;
-      //   return;
-      // }
+      eventBus.$emit('player-move', x, y);
     },
   },
   mounted() {
     let wrapper = this.$refs.wrapper;
-    this.addEvent(wrapper, "mousemove", this.mouseMove);
+    this.addEvent(wrapper, "mousedown", this.mouseListener);
   }
 }
 </script>
@@ -104,19 +90,25 @@ body {
 #back {
   background-image: url('./assets/background/stars_back.png');
   z-index: 0;
-  transition-duration: 1.2s;
+  transition-duration: 2s;
 }
 
 #mid {
   background-image: url('./assets/background/stars_mid.png');
   z-index: 1;
-  transition-duration: 1s;
+  transition-duration: 1.8s;
 }
 
 #front {
   background-image: url('./assets/background/stars_front.png');
   z-index: 2;
-  transition-duration: 0.8s;
+  transition-duration: 1.6s;
+}
+
+#dust {
+  background-image: url('./assets/background/dust.png');
+  z-index: 3;
+  transition-duration: 1.4s;
 }
 
 .parallax {
