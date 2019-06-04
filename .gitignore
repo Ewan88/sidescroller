@@ -2,6 +2,7 @@
 .DS_Store
 node_modules
 /dist
+/src/assets/player/frames
 
 # local env files
 .env.local

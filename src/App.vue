@@ -59,7 +59,7 @@ export default {
       this.backgroundX += -(x - (windowX / 2));
       this.backgroundY += -(y - (windowY / 2));
 
-      eventBus.$emit('player-move', x, y);
+      eventBus.$emit('player-move');
     },
   },
   mounted() {

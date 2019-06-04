@@ -14,24 +14,33 @@ export default {
     return {
       backgroundX: 0,
       backgroundY: 0,
+      moving: false,
     }
   },
   computed: {
     computedPos: function () {
-      return `${this.backgroundX}px ${this.backgroundY}`;
+      return `${this.backgroundX}px ${this.backgroundY}px`;
     },
   },
   methods: {
-    movePlayer(x, y){
-      this.backgroundX = 100;
-      setTimeout(() => {
-        this.backgroundX = 0;
-      }, 1400)
+    moveAnimation(){
+      this.backgroundY += 100;
+      if (this.moving) {
+        setTimeout(() => {
+          this.moveAnimation();
+        }, 400)
+      } else {
+        this.backgroundY = 0;
+      }
     },
   },
   mounted() {
-    eventBus.$on('player-move', (positionX, positionY) => {
-      this.movePlayer(positionX, positionY);
+    eventBus.$on('player-move', () => {
+      this.moving = true;
+      this.moveAnimation();
+      setTimeout(() => {
+        this.moving = false;
+      }, 1200);
     });
   }
 }
@@ -47,6 +56,7 @@ export default {
    width: 100px;
    background-image: url('../assets/player/player.png');
    z-index: 5;
+   background-repeat: repeat;
  }
 
 </style>
