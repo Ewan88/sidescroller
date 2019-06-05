@@ -1,6 +1,7 @@
 <template lang="html">
   <div id="player" v-bind:style="{
-    backgroundPosition: computedPos
+    backgroundPosition: computedPosition,
+    transform: computedRotation
     }">
   </div>
 </template>
@@ -15,14 +16,26 @@ export default {
       backgroundX: 0,
       backgroundY: 0,
       moving: false,
+      rotation: 0,
     }
   },
   computed: {
-    computedPos: function () {
+    computedPosition: function () {
       return `${this.backgroundX}px ${this.backgroundY}px`;
+    },
+    computedRotation: function () {
+      return `rotate(${this.rotation}deg)`
     },
   },
   methods: {
+    rotateAnimation(event){
+      let centerX = window.innerWidth / 2;
+      let centerY = window.innerHeight / 2;
+      let angle = Math.atan2(event.x - centerX,
+        -(event.y - centerY)) * (180 / Math.PI);
+      this.rotation = Math.floor(angle);
+    },
+
     moveAnimation(){
       this.backgroundY += 100;
       if (this.moving) {
@@ -35,6 +48,9 @@ export default {
     },
   },
   mounted() {
+    let wrapper = this.$parent.$refs.wrapper;
+    this.$parent.addEvent(wrapper, "mousemove", this.rotateAnimation);
+
     eventBus.$on('player-move', () => {
       this.moving = true;
       this.moveAnimation();
