@@ -17,6 +17,7 @@
       }">
     </div>
     <Player/>
+    <div id="bounding-box" />
   </div>
 </template>
 
@@ -47,24 +48,42 @@ export default {
       }
     },
 
-    mouseListener(event) {
-      let windowX = window.innerWidth;
-      let windowY = window.innerHeight;
-      let x = event.offsetX;
-      let y = event.offsetY;
-
-      // let newX = x - (windowX / 2);
-      // let newY = y - (windowY / 2);
-
-      this.backgroundX += -(x - (windowX / 2));
-      this.backgroundY += -(y - (windowY / 2));
-
+    keyListener(event) {
+      console.log(event.key);
+      switch (event.key) {
+        case "w":
+          this.moveBackground(0, 100);
+          break;
+        case "a":
+          this.moveBackground(100, 0);
+          break;
+        case "s":
+          this.moveBackground(0, -100);
+          break;
+        case "d":
+          this.moveBackground(-100, 0);
+          break;
+      }
       eventBus.$emit('player-move');
     },
+
+    moveBackground(x, y) {
+      this.backgroundX += x
+      this.backgroundY += y
+    },
+
+    // mouseListener(event) {
+    //   let x = -(event.offsetX - (window.innerWidth / 2));
+    //   let y = -(event.offsetY - (window.innerHeight / 2));
+    //   this.moveBackground(x, y)
+    //   eventBus.$emit('player-move');
+    // },
+
   },
   mounted() {
     let wrapper = this.$refs.wrapper;
     this.addEvent(wrapper, "mousedown", this.mouseListener);
+    this.addEvent(window, "keydown", this.keyListener);
   }
 }
 </script>
@@ -84,31 +103,31 @@ body {
 }
 
 #app:hover {
-  cursor: crosshair;
+  cursor: url('./assets/crosshair.png'), crosshair;
 }
 
 #back {
   background-image: url('./assets/background/stars_back.png');
   z-index: 0;
-  transition-duration: 2s;
+  transition-duration: 1s;
 }
 
 #mid {
   background-image: url('./assets/background/stars_mid.png');
   z-index: 1;
-  transition-duration: 1.8s;
+  transition-duration: 0.7s;
 }
 
 #front {
   background-image: url('./assets/background/stars_front.png');
   z-index: 2;
-  transition-duration: 1.6s;
+  transition-duration: 0.5s;
 }
 
 #dust {
   background-image: url('./assets/background/dust.png');
   z-index: 3;
-  transition-duration: 1.4s;
+  transition-duration: 0.3s;
 }
 
 .parallax {
